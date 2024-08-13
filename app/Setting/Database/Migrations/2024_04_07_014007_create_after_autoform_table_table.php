@@ -13,17 +13,16 @@ use Hyperf\Database\Migrations\Migration;
 use Hyperf\Database\Schema\Blueprint;
 use Hyperf\Database\Schema\Schema;
 
-class CreateLocalAppStore extends Migration
+class CreateAfterAutoformTableTable extends Migration
 {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('app_store', function (Blueprint $table) {
-            $table->comment('app store');
-            $table->id();
-            $table->timestamps();
+        Schema::table('setting_generate_columns', function (Blueprint $table) {
+            Schema::hasColumn('setting_generate_columns', 'extra')
+            || $table->addColumn('string', 'extra', ['length' => 255, 'comment' => '字段扩展信息'])->nullable();
         });
     }
 
@@ -32,6 +31,6 @@ class CreateLocalAppStore extends Migration
      */
     public function down(): void
     {
-        Schema::drop('app_store');
+        Schema::table('setting_generate_columns', function (Blueprint $table) {});
     }
 }
